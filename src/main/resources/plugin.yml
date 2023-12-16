@@ -1,0 +1,4 @@
+name: MobTables
+version: '${project.version}'
+main: de.itotterstadt.mobtables.MobTables
+api-version: '1.20'
