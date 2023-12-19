@@ -3,26 +3,10 @@
 
 
 ## Configuration
+Define when, where and how mobs should spawn.
 
-### Ranges
-Most integer inputs can be replaced with ranges, where a random value is picked from (all options have the same probability).
-This can be done in two ways, both do the same.
-
-**Option 1**
-```yaml
-...:
-  from: 10 | min, inclusive
-  to: 20 | max, inclusive
-```
-
-**Option 2**
-```yaml
-...: 10..20 | min..max , both inclusive
-```
-
-### Example
-
-spawning.yml
+### Schema
+`spawning.yml`
 ```yaml
 keepVanillaSpawning: false | true
 pools:
@@ -95,6 +79,8 @@ default offset is `x = 0; y = -1; z = 0`
 ```
 
 ### Attributes
+Currently supported attributes to spawn mobs with.
+Open a [issue](https://github.com/KaninchenSpeed/MobTables/issues) if you want one added.
 
 #### Size
 Sets the size of slimes and magma cubes.
@@ -115,4 +101,52 @@ When set to `true`: Stops Piglins from converting into Zombiefied Piglins.
     IsImmuneToZombification: true | false
   conditions:
     ...conditions...
+```
+
+### Ranges
+Most integer inputs can be replaced with ranges, where a random value is picked from (all options have the same probability).
+This can be done in two ways, both do the same.
+
+**Option 1**
+```yaml
+...:
+  from: 10 | min, inclusive
+  to: 20 | max, inclusive
+```
+
+**Option 2**
+```yaml
+...: 10..20 | min..max , both inclusive
+```
+
+### Examples
+Examples to base your config on
+
+#### Spawn piglins in desserts
+`spawning.yml`
+```yaml
+keepVanillaSpawning: true
+pools:
+  - rolls: 1
+    conditions:
+      - type: biome
+        biome: DESERT
+    entries:
+      - type: PIGLIN
+        chance: 0.2
+```
+
+#### Spawn magmacubes on magma blocks
+`spawning.yml`
+```yaml
+keepVanillaSpawning: true
+pools:
+  - rolls: 1
+    conditions:
+      - type: block
+        filter:
+          - MAGMA_BLOCK
+    entries:
+      - type: MAGMA_CUBE
+        chance: 1.0
 ```
