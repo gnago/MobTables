@@ -1,9 +1,20 @@
 # MobTables
 
+Ever wanted to change mob spawning easily?
+Then this is the right Plugin for you!
 
+## Features
+- Create **custom rules** for each mob in a familiar loottable like syntax
+- **Disable** the spawning of mobs not defined in the config
 
 ## Configuration
 Define when, where and how mobs should spawn.
+
+- [Schema](https://github.com/KaninchenSpeed/MobTables#Schema)
+  - [Conditions](https://github.com/KaninchenSpeed/MobTables#Conditions)
+  - [Attributes](https://github.com/KaninchenSpeed/MobTables#Attributes)
+  - [Ranges](https://github.com/KaninchenSpeed/MobTables#Ranges)
+- [Examples](https://github.com/KaninchenSpeed/MobTables#Examples)
 
 ### Schema
 `spawning.yml`
