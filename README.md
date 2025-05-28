@@ -93,6 +93,38 @@ default offset is `x = 0; y = -1; z = 0`
 Currently supported attributes to spawn mobs with.
 Open a [issue](https://github.com/KaninchenSpeed/MobTables/issues) if you want one added.
 
+#### Color
+Sets the color of Horses, Sheep, and Shulkers.
+For Horses, must be either `WHITE`, `CREAMY`, `CHESTNUT`, `BROWN`, `BLACK`, `GRAY`, or `DARK_BROWN`
+For Sheep/Shulkers, must be the name of a dye (`WHITE,ORANGE,MAGENTA,LIGHT_BLUE,YELLOW,LIME,PINK,GRAY,LIGHT_GRAY,CYAN,PURPLE,BLUE,BROWN,GREEN,RED,BLACK`)
+
+```yaml
+- values:
+    Color: GRAY
+  conditions:
+    ...conditions...
+```
+
+#### Variant
+This applies to any mob that has a variant (even if this isn't usually referred to as 'variant' in NBT/code)
+Axolotl `LUCY,WILD,GOLD,CYAN,BLUE`
+Cat `TABBY,BLACK,RED,SIAMESE,BRITISH_SHORTHAIR,CALICO,PERSIAN,RAGDOLL,WHITE,JELLIE,ALL_BLACK`
+Fox `RED,SNOW`
+Frog `TEMPERATE,WARM,COLD`
+Horse `NONE,WHITE,WHITEFIELD,WHITE_DOTS,BLACK_DOTS`
+Llama `CREAMY,WHITE,BROWN,GRAY`
+Mooshroom `RED,BROWN`
+Parrot `RED,BLUE,GREEN,CYAN,GRAY`
+Rabbit `BROWN,WHITE,BLACK,BLACK_AND_WHITE,GOLD,SALT_AND_PEPPER,THE_KILLER_BUNNY`
+Wolf `PALE,SPOTTED,SNOWY,BLACK,ASHEN,RUSTY,WOODS,CHESTNUT,STRIPED`
+
+```yaml
+- values:
+    Variant: RUSTY
+  conditions:
+    ...conditions...
+```
+
 #### Size
 Sets the size of slimes and magma cubes.
 Starts at 0.
@@ -133,7 +165,7 @@ This can be done in two ways, both do the same.
 ### Examples
 Examples to base your config on
 
-#### Spawn piglins in desserts
+#### Spawn piglins in deserts
 `spawning.yml`
 ```yaml
 keepVanillaSpawning: true
@@ -160,4 +192,22 @@ pools:
     entries:
       - type: MAGMA_CUBE
         chance: 1.0
+```
+
+#### Spawn creamy horses with black dots in badlands
+`spawning.yml`
+```yaml
+keepVanillaSpawning: true
+pools:
+  - rolls: 1
+    conditions:
+      - type: biome
+        biome: BADLANDS
+    entries:
+      - type: HORSE
+        chance: 0.2
+        attributes:
+          - values:
+              Variant: BLACK_DOTS
+              Color: CREAMY
 ```

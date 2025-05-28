@@ -3,18 +3,19 @@ package de.itotterstadt.mobtables.listeners
 import de.itotterstadt.mobtables.plugin
 import de.itotterstadt.mobtables.util.Config
 import de.itotterstadt.mobtables.util.range
+import org.bukkit.DyeColor
 import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
+import org.bukkit.Registry
 import org.bukkit.block.Biome
-import org.bukkit.entity.Entity
-import org.bukkit.entity.EntityType
-import org.bukkit.entity.Piglin
-import org.bukkit.entity.Slime
+import org.bukkit.entity.*
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason
 import org.bukkit.event.entity.EntitySpawnEvent
+import org.bukkit.material.Colorable
 import org.bukkit.util.Vector
 import kotlin.collections.LinkedHashMap
 
@@ -187,6 +188,42 @@ class SpawnAttribute(hashMap: LinkedHashMap<String, *>): Conditioned(hashMap) {
                     }
                     entity.size = range(value)
                 }
+                "Variant" -> {
+                    if (entity is Axolotl)
+                        entity.variant = Axolotl.Variant.valueOf(value as String)
+                    else if (entity is Cat)
+                        entity.catType = Registry.CAT_VARIANT.get(NamespacedKey.minecraft((value as String).lowercase()))!!
+                    else if (entity is Fox) //Type
+                        entity.foxType = Fox.Type.valueOf(value as String)
+                    else if (entity is Frog)
+                        entity.variant = Registry.FROG_VARIANT.get(NamespacedKey.minecraft((value as String).lowercase()))!!
+                    else if (entity is Horse) //Pattern/Style
+                            entity.style = Horse.Style.valueOf(value as String)
+                    else if (entity is Llama)
+                        entity.color = Llama.Color.valueOf(value as String)
+                    else if (entity is MushroomCow)
+                        entity.variant = MushroomCow.Variant.valueOf(value as String)
+                    else if (entity is Parrot)
+                        entity.variant = Parrot.Variant.valueOf(value as String)
+                    else if (entity is Rabbit)
+                        entity.rabbitType = Rabbit.Type.valueOf(value as String)
+                    else if (entity is Wolf)
+                        entity.variant = Registry.WOLF_VARIANT.get(NamespacedKey.minecraft((value as String).lowercase()))!!
+                    else {
+                        plugin!!.logger.severe("mob ${entity.type} hat kein Variant")
+                        continue
+                    }
+                }
+                "Color" -> {
+                    if (entity is Horse)
+                        entity.color = Horse.Color.valueOf(value as String)
+                    else if (entity is Colorable) //Sheep and Shulkers
+                        entity.color = DyeColor.valueOf(value as String)
+                    else {
+                        plugin!!.logger.severe("mob ${entity.type} hat kein Color")
+                        continue
+                    }
+                }
             }
         }
     }
@@ -220,7 +257,7 @@ class SpawnEntry(hashMap: LinkedHashMap<String, *>): Conditioned(hashMap) {
 }
 
 class SpawnPool(hashMap: LinkedHashMap<String, *>): Conditioned(hashMap) {
-
+// Add null checks here and other areas
     val rolls = hashMap["rolls"] ?: 1
     val entries = (hashMap["entries"] as List<LinkedHashMap<String, *>>).map {
         SpawnEntry(it)
